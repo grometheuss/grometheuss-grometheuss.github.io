@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Idea Generator | Dark Theme</title>
+    <title>Antidoomscroll</title>
     
     <link rel="stylesheet" href="antidoomscroll.css">
     
@@ -36,7 +36,7 @@
         // Get random activity from list
         function getRandomActivity() {
             if (activitiesList.length === 0) {
-                return "📭 Activity list is empty";
+                return "Activity list is empty";
             }
             const randomIndex = Math.floor(Math.random() * activitiesList.length);
             return activitiesList[randomIndex];
@@ -49,13 +49,13 @@
             }
             
             if (!fileLoaded) {
-                outputDiv.innerHTML = "⚠️ File not loaded yet";
+                outputDiv.innerHTML = "File not loaded yet";
                 outputDiv.classList.add('error');
                 return;
             }
             
             if (activitiesList.length === 0) {
-                outputDiv.innerHTML = "📭 Add activities to activities.txt";
+                outputDiv.innerHTML = "Add activities to activities.txt";
                 outputDiv.classList.add('empty');
                 return;
             }
@@ -92,7 +92,7 @@
                 
                 if (!response.ok) {
                     if (response.status === 404) {
-                        outputDiv.innerHTML = "❌ activities.txt not found";
+                        outputDiv.innerHTML = "activities.txt not found";
                         outputDiv.classList.add('error');
                     } else {
                         throw new Error(`HTTP ${response.status}`);
@@ -108,7 +108,7 @@
                     .filter(line => line !== "");
                 
                 if (activitiesList.length === 0) {
-                    outputDiv.innerHTML = "📭 activities.txt is empty";
+                    outputDiv.innerHTML = "activities.txt is empty";
                     outputDiv.classList.add('empty');
                     fileLoaded = true;
                 } else {
@@ -125,7 +125,7 @@
                 
             } catch (error) {
                 console.error(error);
-                outputDiv.innerHTML = "⚠️ Connection error";
+                outputDiv.innerHTML = "Connection error";
                 outputDiv.classList.add('error');
                 fileLoaded = false;
             }
