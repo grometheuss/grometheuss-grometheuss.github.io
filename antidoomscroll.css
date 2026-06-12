@@ -1,0 +1,128 @@
+css
+
+ {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    padding: 20px;
+}
+
+.container {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: #a0a0b0;
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2a2a4a;
+    display: inline-block;
+}
+
+.activity-card {
+    background: rgba(30, 30, 50, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+}
+
+.idea-label {
+    color: #6c6c8a;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.idea-text {
+    color: #ffffff;
+    font-size: 2.2rem;
+    line-height: 1.4;
+    font-weight: 500;
+    word-wrap: break-word;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.idea-text.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.idea-text.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.idea-text.empty,
+.idea-text.error {
+    color: #ff8888;
+    font-size: 1.2rem;
+}
+
+.refresh-btn {
+    background: #2a2a4a;
+    border: none;
+    color: #e0e0ff;
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(100, 150, 255, 0.3);
+}
+
+.refresh-btn:hover {
+    background: #3a3a6a;
+    transform: translateY(-2px);
+}
+
+.refresh-btn:active {
+    transform: translateY(1px);
+}
+
+.refresh-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .idea-text {
+        font-size: 1.5rem;
+    }
+    .activity-card {
+        padding: 2rem 1rem;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+}

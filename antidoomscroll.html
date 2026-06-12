@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea Generator | Dark Theme</title>
+    
+    <link rel="stylesheet" href="antidoomscroll.css">
+    
+    
+</head>
+<body>
+    <div class="container">
+        <h1>What can I do instead of doomscrolling?</h1>
+        
+        <div class="activity-card">
+            <div class="idea-label">Here is an idea...</div>
+            <div class="idea-text" id="activityOutput">Loading...</div>
+        </div>
+        
+        <button class="refresh-btn" id="updateBtn">
+            Give me another one
+        </button>
+    </div>
+
+    <script>
+        // Variables
+        let activitiesList = [];
+        let fileLoaded = false;
+        let isAnimating = false;
+
+        // DOM elements
+        const outputDiv = document.getElementById('activityOutput');
+        const updateBtn = document.getElementById('updateBtn');
+
+        // Get random activity from list
+        function getRandomActivity() {
+            if (activitiesList.length === 0) {
+                return "📭 Activity list is empty";
+            }
+            const randomIndex = Math.floor(Math.random() * activitiesList.length);
+            return activitiesList[randomIndex];
+        }
+
+        // Update with smooth animation
+        function updateWithAnimation() {
+            if (isAnimating) {
+                return;
+            }
+            
+            if (!fileLoaded) {
+                outputDiv.innerHTML = "⚠️ File not loaded yet";
+                outputDiv.classList.add('error');
+                return;
+            }
+            
+            if (activitiesList.length === 0) {
+                outputDiv.innerHTML = "📭 Add activities to activities.txt";
+                outputDiv.classList.add('empty');
+                return;
+            }
+            
+            isAnimating = true;
+            updateBtn.disabled = true;
+            
+            // Step 1: Fade out current text
+            outputDiv.classList.remove('fade-in');
+            outputDiv.classList.add('fade-out');
+            
+            // Step 2: Change text after fade out
+            setTimeout(() => {
+                const newActivity = getRandomActivity();
+                outputDiv.innerHTML = newActivity;
+                
+                outputDiv.classList.remove('fade-out');
+                outputDiv.classList.add('fade-in');
+                
+                // Step 3: Remove animation class and unlock button
+                setTimeout(() => {
+                    outputDiv.classList.remove('fade-in');
+                    isAnimating = false;
+                    updateBtn.disabled = false;
+                }, 300);
+                
+            }, 200);
+        }
+
+        // Load activities from file
+        async function loadActivitiesFile() {
+            try {
+                const response = await fetch('activities.txt', { cache: "no-cache" });
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        outputDiv.innerHTML = "❌ activities.txt not found";
+                        outputDiv.classList.add('error');
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    fileLoaded = false;
+                    return;
+                }
+                
+                const content = await response.text();
+                const lines = content.split(/\r?\n/);
+                activitiesList = lines
+                    .map(line => line.trim())
+                    .filter(line => line !== "");
+                
+                if (activitiesList.length === 0) {
+                    outputDiv.innerHTML = "📭 activities.txt is empty";
+                    outputDiv.classList.add('empty');
+                    fileLoaded = true;
+                } else {
+                    fileLoaded = true;
+                    
+                    // Show first activity with fade-in animation
+                    const firstActivity = getRandomActivity();
+                    outputDiv.innerHTML = firstActivity;
+                    outputDiv.classList.add('fade-in');
+                    setTimeout(() => {
+                        outputDiv.classList.remove('fade-in');
+                    }, 400);
+                }
+                
+            } catch (error) {
+                console.error(error);
+                outputDiv.innerHTML = "⚠️ Connection error";
+                outputDiv.classList.add('error');
+                fileLoaded = false;
+            }
+        }
+
+        // Event listener for button
+        updateBtn.addEventListener('click', () => {
+            updateWithAnimation();
+        });
+
+        // Start loading
+        loadActivitiesFile();
+    </script>
+</body>
+</html>
